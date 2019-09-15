@@ -30,16 +30,19 @@ enum class ErrorReason(var code: Int, var desc: String) {
 
 class GlobalError: Error() {
 
-    var code: Int = -99999999
-    var desc: String = "未知原因"
+    val code: Int
+        get() = this.reason.code
+
+    val desc: String
+        get() = this.reason.desc
+
     var reason: ErrorReason = ErrorReason.unknown
 
 
     companion object Error {
         fun reason(reason: ErrorReason): GlobalError {
             val error = GlobalError()
-            error.code = reason.code
-            error.desc = reason.desc
+            error.reason = reason
             return error
         }
 

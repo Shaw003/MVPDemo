@@ -95,6 +95,7 @@ abstract class ABSBasePresenter<M : IBaseContract.IBaseModel, V : IBaseContract.
                 ErrorReason.illegalDevice -> getView()?.notifyGlobalToDealWith(GlobalEventType.event_exitApp)
                 ErrorReason.illegalUser -> getView()?.notifyGlobalToDealWith(GlobalEventType.event_backToLogin)
                 ErrorReason.decryptFailed -> getView()?.notifyGlobalToDealWith(GlobalEventType.event_showLoginDialog)
+                ErrorReason.userPasswordWrong -> getView()?.notifyGlobalToDealWith(GlobalEventType.event_backToLogin)
             }
         }
     }

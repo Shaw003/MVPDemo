@@ -1,8 +1,7 @@
-package com.example.mvpdemo.Modules.Login
+package com.example.mvpdemo.Common.Modules.Login
 
-import com.example.mvpdemo.Base.CommonCallBack
-import com.example.mvpdemo.Base.IBaseContract
-import com.example.mvpdemo.Base.IResponseCallBack
+import com.example.mvpdemo.Common.Base.IBaseContract
+import com.example.mvpdemo.Common.Base.IResponseCallBack
 import org.json.JSONObject
 
 /**
@@ -15,17 +14,9 @@ abstract class LoginPresenter: IBaseContract.IBasePresenter<ILoginContract.ILogi
     override fun getVerifyCode(uid: String, pwd: String) {
         if (isAttached()) {
             getView()?.showLoading()
-            getModel()?.req_verifyCode(uid, pwd, object: IResponseCallBack<JSONObject> {
-                override fun onSuccess(response: JSONObject?) {
+            getModel()?.req_verifyCode(uid, pwd, object: IResponseCallBack {
+                override fun commonCallBack(isSuccess: Boolean, content: Any?) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-                override fun onFailure(error: Error) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-                override fun commonCallBack(isSuccess: Boolean, content: Any) {
-
                 }
 
             })

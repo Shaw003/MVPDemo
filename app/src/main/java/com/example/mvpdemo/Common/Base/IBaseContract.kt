@@ -1,4 +1,4 @@
-package com.example.mvpdemo.Base
+package com.example.mvpdemo.Common.Base
 
 import android.content.Context
 

@@ -1,4 +1,4 @@
-package com.example.mvpdemo.Global
+package com.example.mvpdemo.Common.Global
 
 import java.lang.Error
 
@@ -47,11 +47,11 @@ class GlobalError: Error() {
         }
 
         /**
-         * 处理异常响应
+         * 根据错误码获取错误原因
          * @param code 响应码
          * @return 错误对象
          */
-        fun handleErrorResponse(code: Int): GlobalError {
+        fun getErrorReason(code: Int): GlobalError {
             var reason = ErrorReason.unknown
             when (code) {
                 ErrorReason.notReachable.code -> reason = ErrorReason.notReachable

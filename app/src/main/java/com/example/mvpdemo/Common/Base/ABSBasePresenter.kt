@@ -1,10 +1,9 @@
-package com.example.mvpdemo.Base
+package com.example.mvpdemo.Common.Base
 
 import android.content.Context
-import com.example.mvpdemo.Global.ErrorReason
-import com.example.mvpdemo.Global.GlobalError
-import com.example.mvpdemo.Global.GlobalEvent
-import com.example.mvpdemo.Global.GlobalEventType
+import com.example.mvpdemo.Common.Global.ErrorReason
+import com.example.mvpdemo.Common.Global.GlobalError
+import com.example.mvpdemo.Common.Global.GlobalEvent
 
 import java.lang.ref.WeakReference
 
@@ -17,7 +16,7 @@ import java.lang.ref.WeakReference
 /**
  * MVP架构的Presenter基类，对接Model基类和View基类，并实现统一回调处理
  */
-abstract class ABSBasePresenter<M : IBaseContract.IBaseModel, V : IBaseContract.IBaseView> : IResponseCallBack<Any> {
+abstract class ABSBasePresenter<M : IBaseContract.IBaseModel, V : IBaseContract.IBaseView> : IResponseCallBack {
 
     private var mvpView: WeakReference<V>? = null
     private var mvpModel: M? = null
@@ -87,15 +86,14 @@ abstract class ABSBasePresenter<M : IBaseContract.IBaseModel, V : IBaseContract.
     /**
      * 统一回调处理
      */
-    override fun commonCallBack(isSuccess: Boolean, content: Any) {
+    override fun commonCallBack(isSuccess: Boolean, content: Any?) {
         if (content is GlobalError) {
             val error = content as GlobalError
             when (error.reason) {
-
-                ErrorReason.illegalDevice -> getView()?.notifyGlobalToDealWith(GlobalEventType.event_exitApp)
-                ErrorReason.illegalUser -> getView()?.notifyGlobalToDealWith(GlobalEventType.event_backToLogin)
-                ErrorReason.decryptFailed -> getView()?.notifyGlobalToDealWith(GlobalEventType.event_showLoginDialog)
-                ErrorReason.userPasswordWrong -> getView()?.notifyGlobalToDealWith(GlobalEventType.event_backToLogin)
+                ErrorReason.illegalDevice -> getView()?.notifyGlobalToDealWith(GlobalEvent.event_exitApp)
+                ErrorReason.illegalUser -> getView()?.notifyGlobalToDealWith(GlobalEvent.event_backToLogin)
+                ErrorReason.decryptFailed -> getView()?.notifyGlobalToDealWith(GlobalEvent.event_showLoginDialog)
+                ErrorReason.userPasswordWrong -> getView()?.notifyGlobalToDealWith(GlobalEvent.event_backToLogin)
             }
         }
     }

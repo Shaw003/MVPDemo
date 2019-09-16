@@ -6,6 +6,7 @@ import com.example.mvpdemo.App.AppBaseActivity;
  * Created by XiaoTong on 2019-09-15.
  */
 public class LoginActivity extends AppBaseActivity {
+
     @Override
     protected void initData() {
 

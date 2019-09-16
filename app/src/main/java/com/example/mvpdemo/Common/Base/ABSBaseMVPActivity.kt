@@ -1,9 +1,8 @@
-package com.example.mvpdemo.Base
+package com.example.mvpdemo.Common.Base
 
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 
 
@@ -72,6 +71,7 @@ public abstract class ABSBaseMVPActivity<P: ABSBasePresenter<IBaseContract.IBase
         return this
     }
 
+    // 这里可以做一些全局的处理
     override fun notifyGlobalToDealWith(content: Any) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

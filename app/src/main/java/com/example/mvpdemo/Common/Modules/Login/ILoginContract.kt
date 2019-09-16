@@ -1,8 +1,9 @@
-package com.example.mvpdemo.Modules.Login
+package com.example.mvpdemo.Common.Modules.Login
 
-import com.example.mvpdemo.Base.ABSBasePresenter
-import com.example.mvpdemo.Base.IBaseContract
-import com.example.mvpdemo.Base.IResponseCallBack
+import com.example.mvpdemo.Common.Base.ABSBasePresenter
+import com.example.mvpdemo.Common.Base.IBaseContract
+import com.example.mvpdemo.Common.Base.IResponseCallBack
+import com.example.mvpdemo.Common.Network.CommonJSONCallBack
 import org.json.JSONObject
 
 /**
@@ -18,20 +19,20 @@ interface ILoginContract: IBaseContract {
          * @param pwd 密码
          * @param callBack 结果回调
          */
-        fun req_verifyCode(uid: String, pwd: String, callBack: IResponseCallBack<JSONObject>)
+        fun req_verifyCode(uid: String, pwd: String, callBack: IResponseCallBack)
 
         /**
          * 请求登录
          * @param uid 用户名
          * @param callBack 结果回调
          */
-        fun req_login(uid: String, callBack: IResponseCallBack<LoginEntity>)
+        fun req_login(uid: String, callBack: IResponseCallBack)
 
         /**
          * 请求登出
          * @param 结果回调
          */
-        fun req_logout(callBack: IResponseCallBack<JSONObject>)
+        fun req_logout(callBack: IResponseCallBack)
     }
 
     interface ILoginView: IBaseContract.IBaseView {

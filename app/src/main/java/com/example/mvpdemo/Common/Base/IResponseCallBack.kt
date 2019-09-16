@@ -1,15 +1,17 @@
-package com.example.mvpdemo.Base
+package com.example.mvpdemo.Common.Base
+
+import okhttp3.Callback
 
 /**
  * Created by XiaoTong on 2019-09-12.
  */
-interface IResponseCallBack<T> {
+interface IResponseCallBack {
 
     /**
      * 单独处理成功回调
-     * @param response 泛型，可以为Bean对象
+     * @param response
      */
-    fun onSuccess(response: T?)
+    fun onSuccess(response: Any?)
 
     /**
      * 单独处理失败回调
@@ -22,6 +24,6 @@ interface IResponseCallBack<T> {
      * @param isSuccess 是否成功
      * @param content 内容
      */
-    fun commonCallBack(isSuccess: Boolean, content: Any)
+    fun commonCallBack(isSuccess: Boolean, content: Any?)
 
 }

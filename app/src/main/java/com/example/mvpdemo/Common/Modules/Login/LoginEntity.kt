@@ -1,6 +1,6 @@
-package com.example.mvpdemo.Modules.Login
+package com.example.mvpdemo.Common.Modules.Login
 
-import com.example.mvpdemo.Base.BaseEntity
+import com.example.mvpdemo.Common.Base.BaseEntity
 
 /**
  * Created by XiaoTong on 2019-09-12.

@@ -1,8 +1,7 @@
 package com.example.mvpdemo.App;
 
-import com.example.mvpdemo.Base.ABSBaseMVPActivity;
-import com.example.mvpdemo.Global.GlobalEvent;
-import com.example.mvpdemo.Global.GlobalEventType;
+import com.example.mvpdemo.Common.Base.ABSBaseMVPActivity;
+import com.example.mvpdemo.Common.Global.GlobalEvent;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -14,8 +13,8 @@ public abstract class AppBaseActivity extends ABSBaseMVPActivity {
     public void notifyGlobalToDealWith(@NotNull Object content) {
         super.notifyGlobalToDealWith(content);
 
-        if (content instanceof GlobalEventType) {
-            switch ((GlobalEventType)content) {
+        if (content instanceof GlobalEvent) {
+            switch ((GlobalEvent)content) {
                 case event_exitApp:
                     System.exit(0);
                     break;

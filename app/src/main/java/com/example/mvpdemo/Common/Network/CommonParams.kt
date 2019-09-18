@@ -6,7 +6,7 @@ package com.example.mvpdemo.Common.Network
 object CommonParams {
 
     public fun create(): MutableMap<String, Any> {
-        val params = mutableMapOf("key" to "value")
+        val params = mutableMapOf("commonKey1" to "value1")
         return params as MutableMap<String, Any>
     }
 }

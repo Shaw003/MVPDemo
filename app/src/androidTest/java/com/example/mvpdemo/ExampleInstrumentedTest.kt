@@ -2,6 +2,7 @@ package com.example.mvpdemo
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
+import com.example.mvpdemo.Common.Modules.Login.LoginPresenter
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,4 +22,6 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getTargetContext()
         assertEquals("com.example.mvpdemo", appContext.packageName)
     }
+
+
 }

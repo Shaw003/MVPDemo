@@ -1,42 +1,44 @@
 package com.example.mvpdemo.Common.Base
 
-import com.example.mvpdemo.Common.Global.ErrorReason
-import com.example.mvpdemo.Common.Global.GlobalError
-import com.example.mvpdemo.Common.Network.CommonJSONCallBack
-import okhttp3.Response
-import org.json.JSONObject
-import java.lang.Error
+import java.lang.Exception
 
 /**
  * Created by XiaoTong on 2019-09-12.
  */
 abstract class ABSBaseRequestListener<T> {
 
-    var callBack: IResponseCallBack? = null
+    var callback: IResponseCallback? = null
 
-    constructor(callBack: IResponseCallBack?) {
-        if (callBack != null) {
-            this.callBack = callBack
+    constructor(callback: IResponseCallback?) {
+        if (callback != null) {
+            this.callback = callback
         }
     }
 
-    fun commonResponseHandler(isSuccess: Boolean, content: Any) {
+    fun commonResponseHandler(requestID: String, isSuccess: Boolean, content: Any) {
         if (isSuccess) {
             onSuccess(content)
+            callback?.onSuccess(requestID, content)
         } else {
-            onFailure(content)
+            onFailure(content as Exception)
+            callback?.onFailure(requestID, content as Exception)
         }
-        if (this.callBack != null) {
-            this.callBack?.commonCallBack(isSuccess, content)
+        if (this.callback != null) {
+            this.callback?.commonCallBack(requestID, isSuccess, content)
         }
     }
 
     /**
-     * 失败的默认实现
+     * ABSBaseRequestListener中定义的默认失败实现
      */
-    open fun onFailure(response: Any) {
-
+    open fun onFailure(response: Exception) {
+        System.out.println("ABSBaseRequestListener中定义的默认失败实现")
     }
 
-    abstract fun onSuccess(response: Any)
+    /**
+     * ABSBaseRequestListener中定义的默认成功实现
+     */
+    open fun onSuccess(response: Any) {
+        System.out.println("ABSBaseRequestListener中定义的默认失败实现")
+    }
 }

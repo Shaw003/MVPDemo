@@ -32,7 +32,9 @@ class HttpClient private constructor() {
 
         val request = Request.Builder().url(url).build()
         val call = mClient.newCall(request)
+        System.out.println("requestUrl = ${request.url}\n params = $params")
         call.enqueue(CommonJSONCallBack(listener, clazz))
+
         return call
 
     }

@@ -1,9 +1,10 @@
 package com.example.mvpdemo.Common.Base
 
 import android.content.Context
-import com.example.mvpdemo.Common.Global.ErrorReason
-import com.example.mvpdemo.Common.Global.GlobalError
+import com.example.mvpdemo.Common.Global.ExceptionReason
+import com.example.mvpdemo.Common.Global.GlobalException
 import com.example.mvpdemo.Common.Global.GlobalEvent
+import java.lang.Exception
 
 import java.lang.ref.WeakReference
 
@@ -16,7 +17,7 @@ import java.lang.ref.WeakReference
 /**
  * MVP架构的Presenter基类，对接Model基类和View基类，并实现统一回调处理
  */
-abstract class ABSBasePresenter<M : IBaseContract.IBaseModel, V : IBaseContract.IBaseView> : IResponseCallBack {
+abstract class ABSBasePresenter<M : IBaseContract.IBaseModel, V : IBaseContract.IBaseView> : IResponseCallback {
 
     private var mvpView: WeakReference<V>? = null
     private var mvpModel: M? = null
@@ -24,10 +25,10 @@ abstract class ABSBasePresenter<M : IBaseContract.IBaseModel, V : IBaseContract.
     /**
      * 绑定View
      */
-    fun attach(view: V) {
+    fun attach(view: V, model: M) {
         mvpView = WeakReference(view)
         if (mvpModel == null) {
-            mvpModel = createModel()
+            mvpModel = model
         }
     }
 
@@ -74,26 +75,36 @@ abstract class ABSBasePresenter<M : IBaseContract.IBaseModel, V : IBaseContract.
     }
 
     /**
-     * 通过该方法创建Module
+     * IResponseCallback在BasePresenter中的默认成功实现
      */
-    protected abstract fun createModel(): M
+    override fun onSuccess(requestID: String, response: Any?) {
+        System.out.println("IResponseCallback在BasePresenter中的默认成功实现")
+    }
 
     /**
-     * 初始化方法
+     * IResponseCallback在BasePresenter中的默认失败实现
      */
-    abstract fun start()
-
+    override fun onFailure(requestID: String, error: Exception) {
+        System.out.println("IResponseCallback在BasePresenter中的默认失败实现")
+    }
     /**
      * 统一回调处理
      */
-    override fun commonCallBack(isSuccess: Boolean, content: Any?) {
-        if (content is GlobalError) {
-            val error = content as GlobalError
+    override fun commonCallBack(requestID: String, isSuccess: Boolean, content: Any?) {
+        if (isSuccess) {
+            this.onSuccess(requestID, content)
+            return
+        }
+        if (content is GlobalException) {
+            val error = content
             when (error.reason) {
-                ErrorReason.illegalDevice -> getView()?.notifyGlobalToDealWith(GlobalEvent.event_exitApp)
-                ErrorReason.illegalUser -> getView()?.notifyGlobalToDealWith(GlobalEvent.event_backToLogin)
-                ErrorReason.decryptFailed -> getView()?.notifyGlobalToDealWith(GlobalEvent.event_showLoginDialog)
-                ErrorReason.userPasswordWrong -> getView()?.notifyGlobalToDealWith(GlobalEvent.event_backToLogin)
+                ExceptionReason.illegalDevice -> getView()?.notifyGlobalToDealWith(GlobalEvent.event_exitApp)
+                ExceptionReason.illegalUser -> getView()?.notifyGlobalToDealWith(GlobalEvent.event_backToLogin)
+                ExceptionReason.decryptFailed -> getView()?.notifyGlobalToDealWith(GlobalEvent.event_showLoginDialog)
+                ExceptionReason.userPasswordWrong -> getView()?.notifyGlobalToDealWith(GlobalEvent.event_backToLogin)
+                else -> {
+                    this.onFailure(requestID, content as Exception)
+                }
             }
         }
     }

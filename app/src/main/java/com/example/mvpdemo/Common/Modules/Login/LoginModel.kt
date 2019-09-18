@@ -1,17 +1,11 @@
 package com.example.mvpdemo.Common.Modules.Login
 
 import com.example.mvpdemo.Common.Base.ABSBaseRequestListener
-import com.example.mvpdemo.Common.Base.IResponseCallBack
-import com.example.mvpdemo.Common.Global.ErrorReason
-import com.example.mvpdemo.Common.Global.GlobalError
-import com.example.mvpdemo.Common.Network.CommonJSONCallBack
+import com.example.mvpdemo.Common.Base.IResponseCallback
 import com.example.mvpdemo.Common.Network.CommonParams
 import com.example.mvpdemo.Common.Network.HttpClient
-import okhttp3.Call
-import okhttp3.Response
 import org.json.JSONObject
-import java.io.IOException
-import java.net.URL
+import java.lang.Exception
 
 /**
  * Created by XiaoTong on 2019-09-12.
@@ -20,36 +14,39 @@ import java.net.URL
 class LoginModel : ILoginContract.ILoginModel {
 
 
-    override fun req_verifyCode(uid: String, pwd: String, callBack: IResponseCallBack) {
+    override fun req_verifyCode(uid: String, pwd: String, callback: IResponseCallback): String {
 
         val params = CommonParams.create()
-        val tmpParams = mapOf("uid" to uid, "pwd" to pwd)
+        val tmpParams = mutableMapOf("uid" to uid, "pwd" to pwd)
         params.put("data", tmpParams)
-        // TODO 网络请求
+        val url = "http://www.baidu.com/search"
+        HttpClient.get().post(url, params, JSONObject::class.java,
+            object : ABSBaseRequestListener<JSONObject>(callback) {
 
-        HttpClient.get().post("", tmpParams, JSONObject::class.java,
-            object : ABSBaseRequestListener<JSONObject>(callBack) {
 
+                // 不需要额外处理则可以不用实现该函数
                 override fun onSuccess(response: Any) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    super.onSuccess(response)
+                    System.out.println("loginModel处理成功")
                 }
 
                 // 不需要额外处理则可以不用实现该函数
-                override fun onFailure(response: Any) {
+                override fun onFailure(response: Exception) {
                     super.onFailure(response)
+                    System.out.println("loginModel处理失败")
                 }
 
             })
 
+        return url
+    }
+
+    override fun req_login(uid: String, callback: IResponseCallback) {
 
     }
 
-    override fun req_login(uid: String, callBack: IResponseCallBack) {
 
-    }
-
-
-    override fun req_logout(callBack: IResponseCallBack) {
+    override fun req_logout(callback: IResponseCallback) {
 
     }
 

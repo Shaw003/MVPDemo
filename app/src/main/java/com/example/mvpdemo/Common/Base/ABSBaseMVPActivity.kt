@@ -27,14 +27,16 @@ public abstract class ABSBaseMVPActivity<P: ABSBasePresenter<IBaseContract.IBase
 
         //绑定view
         if (mPresenter != null) {
-            mPresenter.attach(this)
+            mPresenter.attach(getView(), createMode())
         }
         //初始化
         initView()
         initData()
     }
 
+    abstract fun getView(): IBaseContract.IBaseView
 
+    abstract fun createMode(): IBaseContract.IBaseModel
 
 
     protected abstract fun initData()
@@ -73,6 +75,7 @@ public abstract class ABSBaseMVPActivity<P: ABSBasePresenter<IBaseContract.IBase
 
     // 这里可以做一些全局的处理
     override fun notifyGlobalToDealWith(content: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        System.out.println("BaseMVPActivity处理全局事件")
     }
+
 }

@@ -16,15 +16,21 @@ public abstract class AppBaseActivity extends ABSBaseMVPActivity {
         if (content instanceof GlobalEvent) {
             switch ((GlobalEvent)content) {
                 case event_exitApp:
-                    System.exit(0);
+                    System.out.println("应用层处理事件-退出程序");
                     break;
                 case event_backToLogin:
-                    System.out.println("返回到登录页面");
+                    System.out.println("应用层处理事件-返回到登录页面");
                     break;
                 case event_showLoginDialog:
-                    System.out.println("展示登录窗口");
+                    System.out.println("应用层处理事件-展示登录窗口");
                     break;
             }
         }
+    }
+
+    @Override
+    public void showLoading() {
+        super.showLoading();
+        System.out.println("应用层弹窗");
     }
 }
